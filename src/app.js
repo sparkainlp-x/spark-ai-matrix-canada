@@ -17,6 +17,14 @@ const presets = {
   risky: { label: 'Fast rollout, thin safeguards', learning: 74, support: 22, jobs: 18, guardrails: 16, evidence: 24 }
 };
 
+const perspectives = [
+  ['Government', 'Public trust + accountable procurement', 'Can the public see who is responsible, what the system may do, and how to challenge it?'],
+  ['Business', 'Worker agency + clear boundaries', 'Does adoption improve work without turning hidden risk into someone else’s unpaid labour?'],
+  ['Education', 'Accessible learning + supported practice', 'Can a learner understand the tool, question an output, and get a human answer?'],
+  ['Disability advocacy', 'Paid co-design + refusal rights', 'Are disabled people shaping the system, paid for their expertise, and able to say no?'],
+  ['Community organizations', 'Local benefit + repair pathways', 'Where does value stay local, and what happens when the pilot causes harm?']
+];
+
 const state = { ...presets.baseline, activeLabel: presets.baseline.label };
 
 function clamp(n) { return Math.max(0, Math.min(100, Math.round(n))); }
@@ -60,6 +68,7 @@ function render() {
       <section id="simulate" class="simulator section-wrap section-dark" aria-labelledby="simulate-title">
         <div class="section-kicker"><span>01 / SIMULATE</span><span>Client-side model · synthetic scores</span></div>
         <div class="section-heading"><div><h2 id="simulate-title">What conditions are you building?</h2><p>Adjust the sliders to explore how a community’s adoption profile might change. The score is an illustrative model, not measured evidence.</p></div><div class="preset-group" role="group" aria-label="Choose a scenario"><button data-preset="baseline" class="preset active">Baseline</button><button data-preset="public" class="preset">Public pilot</button><button data-preset="disability" class="preset">Disability-led</button><button data-preset="risky" class="preset">Fast rollout</button></div></div>
+        <div class="perspective-lenses" aria-label="Perspective lenses">${perspectives.map(([audience, lens, question], index) => `<article class="perspective"><span class="perspective-index">0${index + 1}</span><div><strong>${audience}</strong><h3>${lens}</h3><p>${question}</p></div></article>`).join('')}</div>
         <div class="sim-grid">
           <div class="controls" aria-label="Simulation controls">${dimensions.map(d => `<label class="slider-row" for="${d.key}"><span class="slider-top"><span>${d.label}</span><output id="${d.key}-out">${state[d.key]}</output></span><input id="${d.key}" type="range" min="0" max="100" value="${state[d.key]}" /><span class="slider-note">${d.note}</span></label>`).join('')}</div>
           <div class="results" aria-live="polite"><div class="result-intro"><span class="result-label">SIMULATED COMMUNITY PROFILE</span><strong id="scenario-label">${state.activeLabel}</strong></div><div class="metrics">${metric('Adoption readiness', s.adoption, 'coral', 'Ability to start and sustain use')}${metric('Human agency', s.agency, 'violet', 'Ability to pause, question, and decide')}${metric('Community benefit', s.benefit, 'mint', 'Local work and creator pathways')}${metric('Accessible reach', s.access, 'blue', 'Learning and support reach')}${metric('Unmanaged risk', s.risk, 'amber', 'Higher means more exposure')}</div><div class="bar-chart"><div class="chart-title">Outcome shape <span>${evidenceTag('synthetic')}</span></div>${[['Agency',s.agency,'violet'],['Benefit',s.benefit,'mint'],['Access',s.access,'blue'],['Risk',s.risk,'amber']].map(([l,v,c]) => `<div class="bar-row"><span>${l}</span><div class="bar-track"><div class="bar-fill ${c}" style="width:${v}%"></div></div><b>${v}</b></div>`).join('')}</div></div>
