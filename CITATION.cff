@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: >-
+  Spark AI Matrix — responsible community AI adoption simulator and research
+  breakdown
+message: >-
+  If you use this software, please cite it as below. Simulator scores are
+  synthetic illustrations; the proposal needs local scrutiny and testing.
+  No partnership, funding, or endorsement is claimed.
+type: software
+authors:
+  - family-names: Brisson
+    given-names: Jean-François
+    orcid: https://orcid.org/0009-0000-9778-5374
+    affiliation: Spark AI NLP
+version: 1.0.0
+license: AGPL-3.0-only
