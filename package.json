@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "private": false,
   "type": "module",
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0"
+  },
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
+    "dev": "vite --host 127.0.0.1",
+    "dev:host": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test"
   },
   "devDependencies": {
-    "vite": "5.4.10"
+    "vite": "8.3.5"
   }
 }
