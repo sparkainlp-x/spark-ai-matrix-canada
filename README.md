@@ -30,12 +30,23 @@ for review, not silently changed.)
 
 ## Run it
 
+Use Node.js 22.12+ or 24.x and npm.
+
 ```sh
-npm install
-npm run dev      # local development server
-npm run build    # production build into dist/
-npm run preview  # preview the production build
+npm ci
+npm run dev       # loopback-only development server
+npm test
+npm run build     # production build into dist/
+npm run preview   # preview the production build
 ```
+
+The development server binds to `127.0.0.1` by default. To make it available
+to other devices on the LAN, explicitly run `npm run dev:host`; this binds to
+all network interfaces. Only do this on a trusted network, since anyone who
+can reach the server may access the development site and files served by Vite.
+
+Vite is pinned to 8.3.5. Run `npm audit --audit-level=low` to check the full
+locked dependency tree, including development dependencies.
 
 ## Structure
 
