@@ -1,0 +1,53 @@
+name: Documentation checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  documentation-check:
+    name: Verify proposal documentation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify required proposal files exist
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "proposals/frederictonholgrams-museum-ai-extension.md"
+            "proposals/country-prototype-extension.md"
+            "proposals/pilot-partner-brief.md"
+            "proposals/conference-proposal.md"
+            "proposals/conference-submission-summary.md"
+            "proposals/frederictonholgrams-one-page-pitch.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "Missing required file: $file"
+              exit 1
+            fi
+          done
+
+          echo "All required proposal files are present."
+
+      - name: Check proposal files are non-empty
+        run: |
+          set -euo pipefail
+
+          for file in proposals/*.md; do
+            if [[ ! -s "$file" ]]; then
+              echo "Empty proposal file: $file"
+              exit 1
+            fi
+          done
+
+          echo "All proposal files contain content."
+
+      - name: Documentation check complete
+        run: echo "Documentation checks passed."
